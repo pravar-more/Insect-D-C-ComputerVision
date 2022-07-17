@@ -8,8 +8,6 @@ Original file is located at
 """
 
 import os
-import cv2
-import matplotlib.pyplot as plt
 import pandas as pd
 import csv
 from bs4 import BeautifulSoup
@@ -22,7 +20,8 @@ import numpy as np
 
 # set search path and glob for files
 # here we want to look for csv files in the input directory
-path = 'input'
+path = 'labelSet'
+filename = "img_data.csv"
 folder = glob.glob(path + '/*.csv')
 
 # create empty list to store dataframes
@@ -32,25 +31,25 @@ li = []
 for file in folder:
     # read in csv
     temp_df = pd.read_csv(file)
-    # append df to list
+    temp_df['path'] = temp_df['label'] + "/" + ['image']
+        # append df to list
     li.append(temp_df)
       #print(f'Successfully created dataframe for {file} with shape {temp_df.shape}')
 
 # concatenate our list of dataframes into one!
 df = pd.concat(li, axis=0, ignore_index=True)
-
-filename = "img_data.csv"
+df.to_csv(filename)
     
-# writing to csv file 
-with open(filename, 'w') as csvfile: 
-    # creating a csv writer object 
-    csvwriter = csv.writer(csvfile) 
+# # writing to csv file 
+# with open(filename, 'w') as csvfile: 
+#     # creating a csv writer object 
+#     csvwriter = csv.writer(csvfile) 
         
-    # writing the fields 
-    csvwriter.writerow(fields) 
+#     # writing the fields 
+#     csvwriter.writerow(fields) 
         
-    # writing the data rows 
-    csvwriter.writerows(rows)
+#     # writing the data rows 
+#     csvwriter.writerows(rows)
 
 print(df.shape)
 df.head()

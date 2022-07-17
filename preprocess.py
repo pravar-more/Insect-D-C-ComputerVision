@@ -1,10 +1,10 @@
 import os
 import pandas as pd
 
-df1 = pd.read_csv('dataset\Eocanthecona_Bug_A.csv')
-df2 = pd.read_csv('dataset\Larva_Spodoptera_D.csv')
-df3 = pd.read_csv('dataset\Red_Hairy_Catterpillar_C.csv')
-df4 = pd.read_csv('dataset\Tobacco_Caterpillar_B.csv')
+df1 = pd.read_csv('labelSet\Eocanthecona_Bug_A.csv')
+df2 = pd.read_csv('labelSet\Larva_Spodoptera_D.csv')
+df3 = pd.read_csv('labelSet\Red_Hairy_Catterpillar_C.csv')
+df4 = pd.read_csv('labelSet\Tobacco_Caterpillar_B.csv')
 
 
 # def getPath(x):
