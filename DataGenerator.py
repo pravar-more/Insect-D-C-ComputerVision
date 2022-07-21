@@ -25,24 +25,25 @@ class CustomDataGen(tf.keras.utils.Sequence):
         self.n = len(self.df)
 
     def __get_input(self, id):
-        path = self.df.loc[df['image'] == id]['path']
-        image = tf.keras.preprocessing.image.load_img(os.path.join(self.folder, path))
+        path = list(self.df.loc[self.df['image'] == id]['path'])[0]
+        image = tf.keras.preprocessing.image.load_img('dataset/' + path) #os.path.join(self.folder,
         image_arr = tf.keras.preprocessing.image.img_to_array(image)
 
         return image_arr / 255.0
 
     def __get_output(self, id):
-        temp = self.df.loc[df['image'] == id]
+        temp = self.df.loc[self.df['image'] == id]
 
-        img_shape = temp['shape']
+        img_shape = list(temp['shape'])[0]
 
-        xmin = temp['xmin']
-        xmax = temp['xmax']
-        ymin = temp['ymin']
-        ymax = temp['ymax']
+        xmin = list(temp['xmin'])[0]
+        xmax = list(temp['xmax'])[0]
+        ymin = list(temp['ymin'])[0]
+        ymax = list(temp['ymax'])[0]
 
-        h, w, c = image_shape.split(',')
-
+        h, w, c = img_shape.split(',')
+        h = int(h[1:])
+        w = int(w)
         return [xmin * 256 / w, ymin * 256 / h, xmax * 256 / w, ymax * 256 / h]
 
     #     xml_path = os.path.join(self.path, id + ".xml")
@@ -61,10 +62,13 @@ class CustomDataGen(tf.keras.utils.Sequence):
     #             box = [xmin, ymin, xmax, ymax]
     #             boxes.append(box)
     #         return boxes
-
+    def augment(self,args*):
+        #to be implemented by Pravar
+        pass
+        
     def __get_data(self, batches):
-        X_batch = np.asarray([self.__get_input(x) for x in ids])
-        y_batch = np.asarray([self.__get_output(x) for x in ids])
+        X_batch = np.asarray([self.__get_input(x) for x in batches])
+        y_batch = np.asarray([self.__get_output(x) for x in batches])
 
         # y_batch = np.asarray([ [xmin, ymin, xmax, ymax] for xmin, ymin, xmax, ymax in zip(batches['xmin'], batches['ymin'], batches['xmax'], batches['ymax'])])
 
