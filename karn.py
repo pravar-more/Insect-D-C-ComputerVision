@@ -1,9 +1,5 @@
-import os
-import tensorflow as tf
 from model import create_model
 from DataGenerator import CustomDataGen
-import cv2
-import pandas as pd
 
 folder = 'dataset'
 df = pd.read_csv("dataset\MetaData.csv")
